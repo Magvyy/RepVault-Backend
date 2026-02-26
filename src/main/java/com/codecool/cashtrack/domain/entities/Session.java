@@ -1,6 +1,5 @@
 package com.codecool.cashtrack.domain.entities;
 
-import com.codecool.cashtrack.domain.entities.enums.ExerciseEnum;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
