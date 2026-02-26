@@ -26,13 +26,13 @@ public class UserService {
     }
 
     public UserResponseDTO readUser(Long id) {
-        User user = userUtil.throwIfUserDoesNotExist(id);
+        User user = userUtil.findByIdOrThrow(id);
         return new UserResponseDTO(user);
     }
 
     public UserResponseDTO updateUser(Long id, UserRequestDTO userRequestDTO) {
         userUtil.validate(userRequestDTO);
-        User user = userUtil.throwIfUserDoesNotExist(id);
+        User user = userUtil.findByIdOrThrow(id);
         if (!userUtil.authenticatedUserHasId(id)) throw new AccessDeniedException("Unauthorized user update");
         userUtil.set(user, userRequestDTO);
         user = userRepository.save(user);
@@ -40,7 +40,7 @@ public class UserService {
     }
 
     public void deleteUser(Long id) {
-        User user = userUtil.throwIfUserDoesNotExist(id);
+        User user = userUtil.findByIdOrThrow(id);
         if (!userUtil.authenticatedUserHasId(id)) throw new AccessDeniedException("Unauthorized user deletion");
         userRepository.delete(user);
     }

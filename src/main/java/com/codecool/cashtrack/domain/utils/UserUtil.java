@@ -34,7 +34,7 @@ public class UserUtil {
         return oUser.isPresent();
     }
 
-    public User throwIfUserDoesNotExist(Long id) {
+    public User findByIdOrThrow(Long id) {
         Optional<User> oUser = userRepository.findById(id);
         if (oUser.isEmpty()) throw new UserException("User does not exist", HttpStatus.NOT_FOUND);
         return oUser.get();
