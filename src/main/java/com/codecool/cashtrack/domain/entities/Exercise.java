@@ -21,14 +21,18 @@ public class Exercise {
     @JoinColumn(name = "session_id", nullable = false)
     private Session session;
 
+    @Column(name = "description", nullable = true)
+    private String description;
+
     @Enumerated(EnumType.STRING)
     private ExerciseEnum exerciseType;
 
     @OneToMany(mappedBy = "exercise")
     private List<Set> sets = new ArrayList<>();
 
-    public Exercise(Session session, ExerciseEnum exerciseType) {
+    public Exercise(Session session, String description, ExerciseEnum exerciseType) {
         this.session = session;
+        this.description = description;
         this.exerciseType = exerciseType;
     }
 }
