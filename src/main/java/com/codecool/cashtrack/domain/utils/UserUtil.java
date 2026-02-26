@@ -44,14 +44,20 @@ public class UserUtil {
         return authenticatedUser.getId().equals(id);
     }
 
-    public void validateAndSet(User user, UserRequestDTO userRequestDTO) {
+    public void validate(UserRequestDTO userRequestDTO) {
         String userName = userRequestDTO.getUserName();
         String password = userRequestDTO.getPassword();
-        if (isValidUserName(userName)) user.setUserName(userName);
-        if (isValidPassword(password)) user.setPassword(passwordEncoder.encode(password));
+        if (!isValidUserName(userName)) throw new UserException("Invalid username");
+        if (!isValidPassword(password)) throw new UserException("Invalid password");
+    }
+
+    public void set(User user, UserRequestDTO userRequestDTO) {
+        user.setUserName(userRequestDTO.getUserName());
+        user.setPassword(passwordEncoder.encode(userRequestDTO.getPassword()));
     }
 
     private boolean isValidUserName(String userName) {
+        if (isUserNameTaken(userName)) throw new UserException("Username is taken");
         return !userName.trim().isEmpty();
     }
 
