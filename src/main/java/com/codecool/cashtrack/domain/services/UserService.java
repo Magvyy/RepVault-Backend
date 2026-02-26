@@ -11,12 +11,12 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class UserService {
-    private final UserUtil userUtil;
     private final UserRepository userRepository;
+    private final UserUtil userUtil;
 
-    public UserService(UserUtil userUtil, UserRepository userRepository) {
-        this.userUtil = userUtil;
+    public UserService(UserRepository userRepository, UserUtil userUtil) {
         this.userRepository = userRepository;
+        this.userUtil = userUtil;
     }
 
     public void createUser(UserRequestDTO userRequestDTO) {
