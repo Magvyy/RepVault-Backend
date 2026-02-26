@@ -35,4 +35,12 @@ public class Exercise {
         this.description = description;
         this.exerciseType = exerciseType;
     }
+
+    public void addSet(Set set) {
+        this.sets.add(set);
+    }
+
+    public void removeSet(Set set) {
+        this.sets.remove(set);
+    }
 }
