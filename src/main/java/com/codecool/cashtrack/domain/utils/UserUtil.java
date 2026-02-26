@@ -64,4 +64,8 @@ public class UserUtil {
     private boolean isValidPassword(String userName) {
         return !userName.trim().isEmpty();
     }
+
+    public boolean userExists(Long userId) {
+        return userRepository.existsById(userId);
+    }
 }
