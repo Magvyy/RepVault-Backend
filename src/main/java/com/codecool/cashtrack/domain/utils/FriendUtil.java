@@ -15,8 +15,9 @@ public class FriendUtil {
         this.friendRepository = friendRepository;
     }
 
-    public boolean areFriends(User user1, User user2) {
-        FriendId id = new FriendId(user1.getId(), user2.getId());
+    public boolean isFriendsWith(User user) {
+        User authenticatedUser = securityUtil.getAuthenticatedUser();
+        FriendId id = new FriendId(authenticatedUser.getId(), user.getId());
         return friendRepository.existsById(id);
     }
 }
