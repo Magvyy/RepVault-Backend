@@ -3,6 +3,7 @@ package com.codecool.cashtrack.domain.utils;
 import com.codecool.cashtrack.domain.entities.User;
 import com.codecool.cashtrack.domain.exceptions.UserException;
 import com.codecool.cashtrack.infrastructure.repositories.UserRepository;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -22,7 +23,7 @@ public class SecurityUtil {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication != null && authentication.getPrincipal() instanceof UserDetails) {
             Optional<User> oUser = userRepository.findByUserName(((UserDetails) authentication.getPrincipal()).getUsername());
-            if (oUser.isEmpty()) throw new UserException("User is authenticated, but not in database");
+            if (oUser.isEmpty()) throw new UserException("User is authenticated, but not in database", HttpStatus.INTERNAL_SERVER_ERROR);
             return oUser.get();
         }
         return null;

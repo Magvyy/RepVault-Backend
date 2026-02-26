@@ -4,6 +4,7 @@ import com.codecool.cashtrack.application.DTOs.incoming.UserRequestDTO;
 import com.codecool.cashtrack.domain.entities.User;
 import com.codecool.cashtrack.domain.exceptions.UserException;
 import com.codecool.cashtrack.infrastructure.repositories.UserRepository;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
@@ -35,7 +36,7 @@ public class UserUtil {
 
     public User throwIfUserDoesNotExist(Long id) {
         Optional<User> oUser = userRepository.findById(id);
-        if (oUser.isEmpty()) throw new UserException("User does not exist");
+        if (oUser.isEmpty()) throw new UserException("User does not exist", HttpStatus.NOT_FOUND);
         return oUser.get();
     }
 
@@ -47,8 +48,8 @@ public class UserUtil {
     public void validate(UserRequestDTO userRequestDTO) {
         String userName = userRequestDTO.getUserName();
         String password = userRequestDTO.getPassword();
-        if (!isValidUserName(userName)) throw new UserException("Invalid username");
-        if (!isValidPassword(password)) throw new UserException("Invalid password");
+        if (!isValidUserName(userName)) throw new UserException("Invalid username", HttpStatus.BAD_REQUEST);
+        if (!isValidPassword(password)) throw new UserException("Invalid password", HttpStatus.BAD_REQUEST);
     }
 
     public void set(User user, UserRequestDTO userRequestDTO) {
@@ -57,7 +58,7 @@ public class UserUtil {
     }
 
     private boolean isValidUserName(String userName) {
-        if (isUserNameTaken(userName)) throw new UserException("Username is taken");
+        if (isUserNameTaken(userName)) throw new UserException("Username is taken", HttpStatus.CONFLICT);
         return !userName.trim().isEmpty();
     }
 

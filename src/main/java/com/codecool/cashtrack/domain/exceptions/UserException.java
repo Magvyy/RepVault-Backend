@@ -1,7 +1,14 @@
 package com.codecool.cashtrack.domain.exceptions;
 
+import lombok.Getter;
+import org.springframework.http.HttpStatus;
+
+@Getter
 public class UserException extends RuntimeException {
-    public UserException(String message) {
+    private HttpStatus status;
+
+    public UserException(String message, HttpStatus status) {
         super(message);
+        this.status = status;
     }
 }
