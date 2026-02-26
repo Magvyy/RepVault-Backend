@@ -17,6 +17,10 @@ public class Set {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @ManyToOne
+    @JoinColumn(name = "exercise_id", nullable = false)
+    private Exercise exercise;
+
     @Enumerated(EnumType.STRING)
     private SetEnum setType;
 
@@ -26,21 +30,17 @@ public class Set {
     @Column(name = "weight", nullable = false)
     private BigDecimal weight;
 
-    @ManyToOne
-    @JoinColumn(name = "exercise_id", nullable = false)
-    private Exercise exercise;
-
-    public Set(SetEnum setType, int reps, BigDecimal weight, Exercise exercise) {
+    public Set(Exercise exercise, SetEnum setType, int reps, BigDecimal weight) {
+        this.exercise = exercise;
         this.setType = setType;
         this.reps = reps;
         this.weight = weight;
-        this.exercise = exercise;
     }
 
-    public Set(int reps, BigDecimal weight, Exercise exercise) {
+    public Set(Exercise exercise, int reps, BigDecimal weight) {
+        this.exercise = exercise;
         this.setType = SetEnum.NORMAL;
         this.reps = reps;
         this.weight = weight;
-        this.exercise = exercise;
     }
 }
