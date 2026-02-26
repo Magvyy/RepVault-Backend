@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @Table(name = "expenses")
-public class Expense {
+public class Act {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -30,7 +30,7 @@ public class Expense {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    public Expense(ExpenseRequestDTO expenseRequestDTO, User user) {
+    public Act(ExpenseRequestDTO expenseRequestDTO, User user) {
         this.cost = expenseRequestDTO.getCost();
         this.description = expenseRequestDTO.getDescription();
         this.timestamp = expenseRequestDTO.getTimestamp();
