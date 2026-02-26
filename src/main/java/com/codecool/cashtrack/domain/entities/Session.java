@@ -26,6 +26,9 @@ public class Session {
     @Column(name = "description", nullable = true)
     private String description;
 
+    @Column(name = "public", nullable = false)
+    private boolean isPublic;
+
     @Column(name = "start", nullable = false)
     private ZonedDateTime start;
 
@@ -35,9 +38,10 @@ public class Session {
     @OneToMany(mappedBy = "session")
     private List<Exercise> exercises = new ArrayList<>();
 
-    public Session(User user, String description) {
+    public Session(User user, String description, boolean isPublic) {
         this.user = user;
         this.description = description;
+        this.isPublic = isPublic;
         ZoneId timeZone = ZoneId.of("Europe/Oslo");
         this.start = ZonedDateTime.now(timeZone);
     }
