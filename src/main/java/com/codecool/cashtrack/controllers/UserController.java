@@ -1,7 +1,7 @@
 package com.codecool.cashtrack.controllers;
 
 import com.codecool.cashtrack.application.DTOs.incoming.UserRequestDTO;
-import com.codecool.cashtrack.application.DTOs.outgoing.ResponseDTO;
+import com.codecool.cashtrack.application.DTOs.outgoing.DefaultResponseDTO;
 import com.codecool.cashtrack.application.DTOs.outgoing.UserResponseDTO;
 import com.codecool.cashtrack.domain.services.UserService;
 import org.springframework.http.ResponseEntity;
@@ -27,7 +27,7 @@ public class UserController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<ResponseDTO> deleteUser(@PathVariable Long id) {
+    public ResponseEntity<DefaultResponseDTO> deleteUser(@PathVariable Long id) {
         return userService.deleteUser(id);
     }
 }

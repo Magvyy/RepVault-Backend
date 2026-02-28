@@ -3,10 +3,10 @@ package com.codecool.cashtrack.application.DTOs.outgoing;
 import lombok.Getter;
 
 @Getter
-public class ResponseDTO {
+public class DefaultResponseDTO {
     private String message;
 
-    public ResponseDTO(String message) {
+    public DefaultResponseDTO(String message) {
         this.message = message;
     }
 }
