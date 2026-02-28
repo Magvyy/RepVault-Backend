@@ -27,7 +27,7 @@ public class SessionTemplateService {
     public SessionTemplate readSessionTemplate(Long sessionTemplateId) {
         SessionTemplate sessionTemplate = sessionTemplateUtil.findByIdOrThrow(sessionTemplateId);
 
-        if (!sessionTemplateUtil.canViewTemplate(sessionTemplate)) throw new SessionException("Can't view this session template", HttpStatus.FORBIDDEN);
+        if (!sessionTemplateUtil.canViewSessionTemplate(sessionTemplate)) throw new SessionException("Can't view this session template", HttpStatus.FORBIDDEN);
 
         return sessionTemplateUtil.findByIdOrThrow(sessionTemplateId);
     }
@@ -35,7 +35,7 @@ public class SessionTemplateService {
     public SessionTemplate updateSessionTemplate(Long sessionTemplateId, SessionTemplateRequestDTO sessionTemplateRequestDTO) {
         SessionTemplate sessionTemplate = sessionTemplateUtil.findByIdOrThrow(sessionTemplateId);
 
-        if (!sessionTemplateUtil.canUpdateTemplate(sessionTemplate)) throw new SessionException("Can't update this session template", HttpStatus.FORBIDDEN);
+        if (!sessionTemplateUtil.canUpdateSessionTemplate(sessionTemplate)) throw new SessionException("Can't update this session template", HttpStatus.FORBIDDEN);
 
         sessionTemplateUtil.updateSessionTemplate(sessionTemplate, sessionTemplateRequestDTO);
         return sessionTemplateRepository.save(sessionTemplate);
@@ -44,7 +44,7 @@ public class SessionTemplateService {
     public void deleteSessionTemplate(Long sessionTemplateId) {
         SessionTemplate sessionTemplate = sessionTemplateUtil.findByIdOrThrow(sessionTemplateId);
 
-        if (!sessionTemplateUtil.canDeleteTemplate(sessionTemplate)) throw new SessionException("Can't delete this session template", HttpStatus.FORBIDDEN);
+        if (!sessionTemplateUtil.canDeleteSessionTemplate(sessionTemplate)) throw new SessionException("Can't delete this session template", HttpStatus.FORBIDDEN);
 
         sessionTemplateRepository.delete(sessionTemplate);
     }

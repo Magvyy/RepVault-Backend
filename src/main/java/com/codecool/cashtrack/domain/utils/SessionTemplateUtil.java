@@ -58,19 +58,19 @@ public class SessionTemplateUtil {
         return exerciseTemplate;
     }
 
-    public boolean canViewTemplate(SessionTemplate sessionTemplate) {
-        return ownsTemplate(sessionTemplate);
+    public boolean canViewSessionTemplate(SessionTemplate sessionTemplate) {
+        return ownsSessionTemplate(sessionTemplate);
     }
 
-    public boolean canUpdateTemplate(SessionTemplate sessionTemplate) {
-        return ownsTemplate(sessionTemplate);
+    public boolean canUpdateSessionTemplate(SessionTemplate sessionTemplate) {
+        return ownsSessionTemplate(sessionTemplate);
     }
 
-    public boolean canDeleteTemplate(SessionTemplate sessionTemplate) {
-        return ownsTemplate(sessionTemplate);
+    public boolean canDeleteSessionTemplate(SessionTemplate sessionTemplate) {
+        return ownsSessionTemplate(sessionTemplate);
     }
 
-    private boolean ownsTemplate(SessionTemplate sessionTemplate) {
+    private boolean ownsSessionTemplate(SessionTemplate sessionTemplate) {
         User authenticatedUser = securityUtil.getAuthenticatedUser();
         return authenticatedUser.getId().equals(sessionTemplate.getUser().getId());
     }
