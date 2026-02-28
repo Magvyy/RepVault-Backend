@@ -15,6 +15,11 @@ public class FriendRequestUtil {
         this.friendRequestRepository = friendRequestRepository;
     }
 
+    public boolean hasRequestWith(User user) {
+        User authenticatedUser = securityUtil.getAuthenticatedUser();
+        return friendRequestRepository.existsBetween(user.getId(), authenticatedUser.getId());
+    }
+
     public boolean hasRequestFrom(User user) {
         User authenticatedUser = securityUtil.getAuthenticatedUser();
         FriendRequestId id = new FriendRequestId(user.getId(), authenticatedUser.getId());
