@@ -11,15 +11,15 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
-@Table(name = "exercises")
-public class Exercise {
+@Table(name = "exercise_templates")
+public class ExerciseTemplate {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @ManyToOne
     @JoinColumn(name = "session_id", nullable = false)
-    private Session session;
+    private SessionTemplate session;
 
     @Column(name = "description", nullable = true)
     private String description;
@@ -32,19 +32,19 @@ public class Exercise {
             cascade = CascadeType.ALL,
             orphanRemoval = true
     )
-    private List<Set> sets = new ArrayList<>();
+    private List<SetTemplate> sets = new ArrayList<>();
 
-    public Exercise(Session session, String description, ExerciseEnum exerciseType) {
+    public ExerciseTemplate(SessionTemplate session, String description, ExerciseEnum exerciseType) {
         this.session = session;
         this.description = description;
         this.exerciseType = exerciseType;
     }
 
-    public void addSet(Set set) {
+    public void addSet(SetTemplate set) {
         this.sets.add(set);
     }
 
-    public void removeSet(Set set) {
+    public void removeSet(SetTemplate set) {
         this.sets.remove(set);
     }
 }

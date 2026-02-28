@@ -12,7 +12,7 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
-@Table(name = "expenses")
+@Table(name = "sessions")
 public class Session {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -34,13 +34,20 @@ public class Session {
     @Column(name = "end", nullable = false)
     private ZonedDateTime end;
 
-    @OneToMany(mappedBy = "session")
+    @OneToMany(
+            mappedBy = "session",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
     private List<Exercise> exercises = new ArrayList<>();
 
     public Session(User user, String description, boolean isPublic) {
         this.user = user;
         this.description = description;
         this.isPublic = isPublic;
+    }
+
+    public void startSession() {
         ZoneId timeZone = ZoneId.of("Europe/Oslo");
         this.start = ZonedDateTime.now(timeZone);
     }
