@@ -1,8 +1,8 @@
 package com.codecool.cashtrack.controllers;
 
 import com.codecool.cashtrack.application.DTOs.incoming.UserRequestDTO;
-import com.codecool.cashtrack.application.DTOs.outgoing.ResponseDTO;
 import com.codecool.cashtrack.controllers.utils.JwtUtil;
+import com.codecool.cashtrack.controllers.utils.ResponseUtil;
 import com.codecool.cashtrack.domain.services.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,15 +22,15 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<ResponseDTO> register(@RequestBody UserRequestDTO userRequestDTO) {
-        ResponseEntity<ResponseDTO> response = userService.createUser(userRequestDTO);
+    public ResponseEntity<?> register(@RequestBody UserRequestDTO userRequestDTO) {
+        userService.createUser(userRequestDTO);
         jwtUtil.authenticate(userRequestDTO);
-        return response;
+        return ResponseUtil.wrapEntity(null);
     }
 
     @PostMapping("/login")
-    public ResponseEntity<ResponseDTO> login(@RequestBody UserRequestDTO userRequestDTO) {
+    public ResponseEntity<?> login(@RequestBody UserRequestDTO userRequestDTO) {
         jwtUtil.authenticate(userRequestDTO);
-        return ResponseEntity.ok(new ResponseDTO("Login successful"));
+        return ResponseUtil.wrapEntity(null);
     }
 }
