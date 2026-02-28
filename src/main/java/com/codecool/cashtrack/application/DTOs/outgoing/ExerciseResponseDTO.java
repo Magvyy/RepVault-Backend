@@ -10,13 +10,13 @@ import java.util.List;
 @Getter
 public class ExerciseResponseDTO {
     private Long id;
-    private ExerciseEnum exerciseType;
+    private ExerciseEnum type;
     private String description;
     private List<SetResponseDTO> sets;
 
     public ExerciseResponseDTO(Exercise exercise) {
         this.id = exercise.getId();
-        this.exerciseType = exercise.getExerciseType();
+        this.type = exercise.getType();
         this.description = exercise.getDescription();
         this.sets = exercise.getSets().stream()
                 .map(SetResponseDTO::new)
@@ -25,7 +25,7 @@ public class ExerciseResponseDTO {
 
     public ExerciseResponseDTO(ExerciseTemplate exerciseTemplate) {
         this.id = exerciseTemplate.getId();
-        this.exerciseType = exerciseTemplate.getExerciseType();
+        this.type = exerciseTemplate.getType();
         this.description = exerciseTemplate.getDescription();
         this.sets = exerciseTemplate.getSets().stream()
                 .map(SetResponseDTO::new)

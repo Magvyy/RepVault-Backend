@@ -41,12 +41,12 @@ public class SessionUtil {
         Exercise exercise = new Exercise(
                 session,
                 exerciseRequestDTO.getDescription(),
-                exerciseRequestDTO.getExerciseType()
+                exerciseRequestDTO.getType()
         );
         for (SetRequestDTO setRequestDTO : exerciseRequestDTO.getSets()) {
             Set set = new Set(
                     exercise,
-                    setRequestDTO.getSetType(),
+                    setRequestDTO.getType(),
                     setRequestDTO.getReps(),
                     setRequestDTO.getWeight()
             );

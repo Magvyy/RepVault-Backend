@@ -9,7 +9,7 @@ import java.util.List;
 @Getter
 @Setter
 public class ExerciseRequestDTO {
-    private ExerciseEnum exerciseType;
+    private ExerciseEnum type;
     private String description;
     private List<SetRequestDTO> sets;
 }

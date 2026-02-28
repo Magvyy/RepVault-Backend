@@ -22,7 +22,7 @@ public class Set {
     private Exercise exercise;
 
     @Enumerated(EnumType.STRING)
-    private SetEnum setType;
+    private SetEnum type;
 
     @Column(name = "reps", nullable = false)
     private int reps;
@@ -30,16 +30,16 @@ public class Set {
     @Column(name = "weight", nullable = false)
     private BigDecimal weight;
 
-    public Set(Exercise exercise, SetEnum setType, int reps, BigDecimal weight) {
+    public Set(Exercise exercise, SetEnum type, int reps, BigDecimal weight) {
         this.exercise = exercise;
-        this.setType = setType;
+        this.type = type;
         this.reps = reps;
         this.weight = weight;
     }
 
     public Set(Exercise exercise, int reps, BigDecimal weight) {
         this.exercise = exercise;
-        this.setType = SetEnum.NORMAL;
+        this.type = SetEnum.NORMAL;
         this.reps = reps;
         this.weight = weight;
     }

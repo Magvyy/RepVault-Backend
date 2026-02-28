@@ -25,7 +25,7 @@ public class ExerciseTemplate {
     private String description;
 
     @Enumerated(EnumType.STRING)
-    private ExerciseEnum exerciseType;
+    private ExerciseEnum type;
 
     @OneToMany(
             mappedBy = "exercise",
@@ -34,10 +34,10 @@ public class ExerciseTemplate {
     )
     private List<SetTemplate> sets = new ArrayList<>();
 
-    public ExerciseTemplate(SessionTemplate session, String description, ExerciseEnum exerciseType) {
+    public ExerciseTemplate(SessionTemplate session, String description, ExerciseEnum type) {
         this.session = session;
         this.description = description;
-        this.exerciseType = exerciseType;
+        this.type = type;
     }
 
     public ExerciseTemplate() {

@@ -22,7 +22,7 @@ public class SetTemplate {
     private ExerciseTemplate exercise;
 
     @Enumerated(EnumType.STRING)
-    private SetEnum setType;
+    private SetEnum type;
 
     @Column(name = "reps", nullable = false)
     private int reps;
@@ -30,9 +30,9 @@ public class SetTemplate {
     @Column(name = "weight", nullable = false)
     private BigDecimal weight;
 
-    public SetTemplate(ExerciseTemplate exercise, SetEnum setType, int reps, BigDecimal weight) {
+    public SetTemplate(ExerciseTemplate exercise, SetEnum type, int reps, BigDecimal weight) {
         this.exercise = exercise;
-        this.setType = setType;
+        this.type = type;
         this.reps = reps;
         this.weight = weight;
     }

@@ -44,12 +44,12 @@ public class SessionTemplateUtil {
         ExerciseTemplate exerciseTemplate = new ExerciseTemplate(
                 sessionTemplate,
                 exerciseRequestDTO.getDescription(),
-                exerciseRequestDTO.getExerciseType()
+                exerciseRequestDTO.getType()
         );
         for (SetRequestDTO setRequestDTO : exerciseRequestDTO.getSets()) {
             SetTemplate setTemplate = new SetTemplate(
                     exerciseTemplate,
-                    setRequestDTO.getSetType(),
+                    setRequestDTO.getType(),
                     setRequestDTO.getReps(),
                     setRequestDTO.getWeight()
             );
