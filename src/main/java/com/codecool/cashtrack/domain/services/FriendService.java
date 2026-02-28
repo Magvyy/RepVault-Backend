@@ -56,4 +56,15 @@ public class FriendService {
         Friend friend = new Friend(authenticatedUser, user);
         friendRepository.save(friend);
     }
+
+    public void rejectFriendRequest(Long userId) {
+        User user = userUtil.findByIdOrThrow(userId);
+        User authenticatedUser = securityUtil.getAuthenticatedUser();
+
+        FriendRequest friendRequest = friendRequestRepository
+                .findByToAndFrom(authenticatedUser, user)
+                .orElseThrow(() -> new FriendException("You don't have a friend request from this user", HttpStatus.NOT_FOUND));
+
+        friendRequestRepository.delete(friendRequest);
+    }
 }
