@@ -1,7 +1,6 @@
 package com.codecool.cashtrack.domain.services;
 
 import com.codecool.cashtrack.application.DTOs.incoming.UserRequestDTO;
-import com.codecool.cashtrack.application.DTOs.outgoing.UserResponseDTO;
 import com.codecool.cashtrack.domain.entities.User;
 import com.codecool.cashtrack.domain.utils.UserUtil;
 import com.codecool.cashtrack.infrastructure.repositories.UserRepository;
@@ -19,24 +18,22 @@ public class UserService {
         this.userUtil = userUtil;
     }
 
-    public void createUser(UserRequestDTO userRequestDTO) {
+    public User createUser(UserRequestDTO userRequestDTO) {
         userUtil.validate(userRequestDTO);
         User user = userUtil.convertToEntity(userRequestDTO);
-        userRepository.save(user);
+        return userRepository.save(user);
     }
 
-    public UserResponseDTO readUser(Long id) {
-        User user = userUtil.findByIdOrThrow(id);
-        return new UserResponseDTO(user);
+    public User readUser(Long id) {
+        return userUtil.findByIdOrThrow(id);
     }
 
-    public UserResponseDTO updateUser(Long id, UserRequestDTO userRequestDTO) {
+    public User updateUser(Long id, UserRequestDTO userRequestDTO) {
         userUtil.validate(userRequestDTO);
         User user = userUtil.findByIdOrThrow(id);
         if (!userUtil.authenticatedUserHasId(id)) throw new AccessDeniedException("Unauthorized user update");
         userUtil.set(user, userRequestDTO);
-        user = userRepository.save(user);
-        return new UserResponseDTO(user);
+        return userRepository.save(user);
     }
 
     public void deleteUser(Long id) {

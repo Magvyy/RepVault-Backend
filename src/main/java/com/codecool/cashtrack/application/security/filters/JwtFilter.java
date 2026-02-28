@@ -1,6 +1,6 @@
 package com.codecool.cashtrack.application.security.filters;
 
-import com.codecool.cashtrack.application.security.utils.JwtFilterUtil;
+import com.codecool.cashtrack.application.security.utils.JwtUtil;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.Cookie;
@@ -20,11 +20,11 @@ import java.io.IOException;
 
 @Component
 public class JwtFilter extends OncePerRequestFilter {
-    private final JwtFilterUtil jwtFilterUtil;
+    private final JwtUtil jwtUtil;
     private final String jwt_cookie_name;
 
-    public JwtFilter(JwtFilterUtil jwtFilterUtil, @Value("${jwt.name}") String jwt_cookie_name) {
-        this.jwtFilterUtil = jwtFilterUtil;
+    public JwtFilter(JwtUtil jwtUtil, @Value("${jwt.name}") String jwt_cookie_name) {
+        this.jwtUtil = jwtUtil;
         this.jwt_cookie_name = jwt_cookie_name;
     }
 
@@ -37,8 +37,8 @@ public class JwtFilter extends OncePerRequestFilter {
             return;
         }
 
-        if (jwtFilterUtil.validateToken(jwt)) {
-            String username = jwtFilterUtil.extractUsername(jwt);
+        if (jwtUtil.validateToken(jwt)) {
+            String username = jwtUtil.extractUsername(jwt);
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
             if (authentication != null && authentication.getPrincipal() instanceof UserDetails userDetails) {
                 UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());

@@ -36,4 +36,8 @@ public class SetTemplate {
         this.reps = reps;
         this.weight = weight;
     }
+
+    public SetTemplate() {
+
+    }
 }

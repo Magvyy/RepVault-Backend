@@ -10,7 +10,6 @@ import java.math.BigDecimal;
 @Setter
 public class SetRequestDTO {
     private SetEnum setType;
-    private String description;
     private int reps;
     private BigDecimal weight;
 }

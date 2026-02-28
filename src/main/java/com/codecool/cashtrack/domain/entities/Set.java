@@ -43,4 +43,8 @@ public class Set {
         this.reps = reps;
         this.weight = weight;
     }
+
+    public Set() {
+
+    }
 }

@@ -40,6 +40,10 @@ public class ExerciseTemplate {
         this.exerciseType = exerciseType;
     }
 
+    public ExerciseTemplate() {
+
+    }
+
     public void addSet(SetTemplate set) {
         this.sets.add(set);
     }

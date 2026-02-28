@@ -4,6 +4,7 @@ import com.codecool.cashtrack.domain.entities.User;
 import com.codecool.cashtrack.domain.exceptions.UserException;
 import com.codecool.cashtrack.infrastructure.repositories.UserRepository;
 import org.jspecify.annotations.NullMarked;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -20,7 +21,7 @@ public class CustomUserDetailsService implements UserDetailsService {
     @Override
     @NullMarked
     public UserDetails loadUserByUsername(String userName) {
-        User user = userRepository.findByUserName(userName).orElseThrow(() -> new UserException("User not found"));
+        User user = userRepository.findByUserName(userName).orElseThrow(() -> new UserException("User not found", HttpStatus.NOT_FOUND));
         return new CustomUserDetails(user);
     }
 

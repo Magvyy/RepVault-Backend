@@ -40,6 +40,10 @@ public class Exercise {
         this.exerciseType = exerciseType;
     }
 
+    public Exercise() {
+
+    }
+
     public void addSet(Set set) {
         this.sets.add(set);
     }

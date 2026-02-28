@@ -35,6 +35,10 @@ public class SessionTemplate {
         this.name = name;
     }
 
+    public SessionTemplate() {
+
+    }
+
     public void addExercise(ExerciseTemplate exercise) {
         this.exercises.add(exercise);
     }

@@ -9,6 +9,5 @@ import java.util.List;
 @Setter
 public class SessionTemplateRequestDTO {
     private String name;
-    private boolean isPublic;
     private List<ExerciseRequestDTO> exercises;
 }

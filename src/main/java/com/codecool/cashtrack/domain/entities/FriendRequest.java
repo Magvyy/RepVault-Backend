@@ -25,13 +25,13 @@ public class FriendRequest {
     @JoinColumn(name = "to_user_id", nullable = false)
     private User to;
 
-    public FriendRequest() {
-
-    }
-
     public FriendRequest(User from, User to) {
         this.id = new FriendRequestId(from.getId(), to.getId());
         this.from = from;
         this.to = to;
+    }
+
+    public FriendRequest() {
+
     }
 }

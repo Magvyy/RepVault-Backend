@@ -1,9 +1,11 @@
 package com.codecool.cashtrack.controllers;
 
 import com.codecool.cashtrack.application.DTOs.incoming.SessionTemplateRequestDTO;
+import com.codecool.cashtrack.application.DTOs.outgoing.SessionTemplateResponseDTO;
 import com.codecool.cashtrack.controllers.utils.ResponseUtil;
 import com.codecool.cashtrack.domain.entities.SessionTemplate;
 import com.codecool.cashtrack.domain.services.SessionTemplateService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,26 +19,29 @@ public class SessionTemplateController {
     }
 
     @PostMapping()
-    public ResponseEntity<SessionTemplate> createSessionTemplate(@RequestBody SessionTemplateRequestDTO sessionTemplateRequestDTO) {
+    public ResponseEntity<SessionTemplateResponseDTO> createSessionTemplate(@RequestBody SessionTemplateRequestDTO sessionTemplateRequestDTO) {
         SessionTemplate sessionTemplate = sessionTemplateService.createSessionTemplate(sessionTemplateRequestDTO);
-        return ResponseUtil.wrapEntity(sessionTemplate);
+        SessionTemplateResponseDTO sessionTemplateResponseDTO = new SessionTemplateResponseDTO(sessionTemplate);
+        return ResponseUtil.wrapEntity(sessionTemplateResponseDTO);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<SessionTemplate> readSessionTemplate(@PathVariable Long id) {
+    public ResponseEntity<SessionTemplateResponseDTO> readSessionTemplate(@PathVariable Long id) {
         SessionTemplate sessionTemplate = sessionTemplateService.readSessionTemplate(id);
-        return ResponseUtil.wrapEntity(sessionTemplate);
+        SessionTemplateResponseDTO sessionTemplateResponseDTO = new SessionTemplateResponseDTO(sessionTemplate);
+        return ResponseUtil.wrapEntity(sessionTemplateResponseDTO);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<SessionTemplate> updateSessionTemplate(@PathVariable Long id, @RequestBody SessionTemplateRequestDTO sessionTemplateRequestDTO) {
+    public ResponseEntity<SessionTemplateResponseDTO> updateSessionTemplate(@PathVariable Long id, @RequestBody SessionTemplateRequestDTO sessionTemplateRequestDTO) {
         SessionTemplate sessionTemplate = sessionTemplateService.updateSessionTemplate(id, sessionTemplateRequestDTO);
-        return ResponseUtil.wrapEntity(sessionTemplate);
+        SessionTemplateResponseDTO sessionTemplateResponseDTO = new SessionTemplateResponseDTO(sessionTemplate);
+        return ResponseUtil.wrapEntity(sessionTemplateResponseDTO);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteSessionTemplate(@PathVariable Long id) {
         sessionTemplateService.deleteSessionTemplate(id);
-        return ResponseUtil.wrapEntity(null);
+        return ResponseUtil.wrapEntity(null, HttpStatus.NO_CONTENT);
     }
 }

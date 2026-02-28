@@ -12,10 +12,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Component
-public class JwtFilterUtil {
+public class JwtUtil {
     private final SecretKey KEY;
 
-    public JwtFilterUtil(@Value("${jwt.key}") String secret_key) {
+    public JwtUtil(@Value("${jwt.key}") String secret_key) {
         KEY = Keys.hmacShaKeyFor(Decoders.BASE64.decode(secret_key));
     }
 

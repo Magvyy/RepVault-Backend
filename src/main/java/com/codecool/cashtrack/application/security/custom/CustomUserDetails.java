@@ -23,6 +23,10 @@ public class CustomUserDetails implements UserDetails {
         return authorities;
     }
 
+    public User getUser() {
+        return this.user;
+    }
+
     @Override
     public String getPassword() {
         return user.getPassword();

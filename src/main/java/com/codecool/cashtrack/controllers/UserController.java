@@ -3,7 +3,9 @@ package com.codecool.cashtrack.controllers;
 import com.codecool.cashtrack.application.DTOs.incoming.UserRequestDTO;
 import com.codecool.cashtrack.application.DTOs.outgoing.UserResponseDTO;
 import com.codecool.cashtrack.controllers.utils.ResponseUtil;
+import com.codecool.cashtrack.domain.entities.User;
 import com.codecool.cashtrack.domain.services.UserService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,19 +20,21 @@ public class UserController {
 
     @GetMapping("/{id}")
     public ResponseEntity<UserResponseDTO> readUser(@PathVariable Long id) {
-        UserResponseDTO userResponseDTO = userService.readUser(id);
+        User user = userService.readUser(id);
+        UserResponseDTO userResponseDTO = new UserResponseDTO(user);
         return ResponseUtil.wrapEntity(userResponseDTO);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<UserResponseDTO> updateUser(@PathVariable Long id, @RequestBody UserRequestDTO userRequestDTO) {
-        UserResponseDTO userResponseDTO = userService.updateUser(id, userRequestDTO);
+        User user = userService.updateUser(id, userRequestDTO);
+        UserResponseDTO userResponseDTO = new UserResponseDTO(user);
         return ResponseUtil.wrapEntity(userResponseDTO);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteUser(@PathVariable Long id) {
         userService.deleteUser(id);
-        return ResponseUtil.wrapEntity(null);
+        return ResponseUtil.wrapEntity(null, HttpStatus.NO_CONTENT);
     }
 }

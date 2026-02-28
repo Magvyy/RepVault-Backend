@@ -25,8 +25,7 @@ public class SessionUtil {
         User authenticatedUser = securityUtil.getAuthenticatedUser();
         Session session = new Session(
                 authenticatedUser,
-                sessionRequestDTO.getDescription(),
-                sessionRequestDTO.isPublic()
+                sessionRequestDTO.getDescription()
         );
         for (ExerciseRequestDTO exerciseRequestDTO : sessionRequestDTO.getExercises()) {
             Exercise exercise = createExercise(

@@ -25,9 +25,6 @@ public class Session {
     @Column(name = "description", nullable = true)
     private String description;
 
-    @Column(name = "public", nullable = false)
-    private boolean isPublic;
-
     @Column(name = "start", nullable = false)
     private ZonedDateTime start;
 
@@ -41,10 +38,13 @@ public class Session {
     )
     private List<Exercise> exercises = new ArrayList<>();
 
-    public Session(User user, String description, boolean isPublic) {
+    public Session(User user, String description) {
         this.user = user;
         this.description = description;
-        this.isPublic = isPublic;
+    }
+
+    public Session() {
+
     }
 
     public void startSession() {
