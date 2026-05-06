@@ -9,10 +9,10 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.codecool</groupId>
-    <artifactId>CashTrack</artifactId>
+    <artifactId>RepVault</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>CashTrack</name>
-    <description>CashTrack</description>
+    <name>RepVault</name>
+    <description>RepVault</description>
     <url/>
     <licenses>
         <license/>
@@ -116,6 +116,12 @@
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
             <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+            <version>3.0.0</version>
         </dependency>
     </dependencies>
 
