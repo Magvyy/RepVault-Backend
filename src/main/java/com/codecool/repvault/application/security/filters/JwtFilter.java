@@ -1,5 +1,6 @@
 package com.codecool.repvault.application.security.filters;
 
+import com.codecool.repvault.application.security.custom.CustomUserDetailsService;
 import com.codecool.repvault.application.security.utils.JwtUtil;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -21,11 +22,13 @@ import java.io.IOException;
 @Component
 public class JwtFilter extends OncePerRequestFilter {
     private final JwtUtil jwtUtil;
-    private final String jwt_cookie_name;
+    private final String jwtCookieName;
+    private final CustomUserDetailsService userDetailsService;
 
-    public JwtFilter(JwtUtil jwtUtil, @Value("${jwt.name}") String jwt_cookie_name) {
+    public JwtFilter(JwtUtil jwtUtil, @Value("${jwt.name}") String jwtCookieName, CustomUserDetailsService userDetailsService) {
         this.jwtUtil = jwtUtil;
-        this.jwt_cookie_name = jwt_cookie_name;
+        this.jwtCookieName = jwtCookieName;
+        this.userDetailsService = userDetailsService;
     }
 
     @Override
@@ -39,12 +42,10 @@ public class JwtFilter extends OncePerRequestFilter {
 
         if (jwtUtil.validateToken(jwt)) {
             String username = jwtUtil.extractUsername(jwt);
-            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-            if (authentication != null && authentication.getPrincipal() instanceof UserDetails userDetails) {
-                UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
-                authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-                SecurityContextHolder.getContext().setAuthentication(authToken);
-            }
+            UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+            UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+            authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+            SecurityContextHolder.getContext().setAuthentication(authToken);
         }
 
         filterChain.doFilter(request, response);
@@ -56,7 +57,7 @@ public class JwtFilter extends OncePerRequestFilter {
         }
 
         for (Cookie cookie : request.getCookies()) {
-            if (jwt_cookie_name.equals(cookie.getName())) {
+            if (jwtCookieName.equals(cookie.getName())) {
                 return cookie.getValue();
             }
         }

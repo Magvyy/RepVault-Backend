@@ -1,21 +1,23 @@
 package com.codecool.repvault.application.DTOs.outgoing;
 
+import com.codecool.repvault.domain.entities.ExerciseTemplate;
 import com.codecool.repvault.domain.entities.SessionTemplate;
+import com.codecool.repvault.domain.entities.enums.ExerciseEnum;
 import lombok.Getter;
 
 import java.util.List;
 
 @Getter
-public class SessionTemplateResponseDTO {
+public class SessionTemplateOverviewResponseDTO {
     private Long id;
     private String name;
-    private List<ExerciseTemplateResponseDTO> exercises;
+    private List<ExerciseEnum> exercises;
 
-    public SessionTemplateResponseDTO(SessionTemplate sessionTemplate) {
+    public SessionTemplateOverviewResponseDTO(SessionTemplate sessionTemplate) {
         this.id = sessionTemplate.getId();
         this.name = sessionTemplate.getName();
         this.exercises = sessionTemplate.getExercises().stream()
-                .map(ExerciseTemplateResponseDTO::new)
+                .map(ExerciseTemplate::getType)
                 .toList();
     }
 }

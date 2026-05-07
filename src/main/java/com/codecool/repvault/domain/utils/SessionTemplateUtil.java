@@ -1,12 +1,7 @@
 package com.codecool.repvault.domain.utils;
 
-import com.codecool.repvault.application.DTOs.incoming.ExerciseRequestDTO;
-import com.codecool.repvault.application.DTOs.incoming.SessionTemplateRequestDTO;
-import com.codecool.repvault.application.DTOs.incoming.SetRequestDTO;
-import com.codecool.repvault.domain.entities.ExerciseTemplate;
-import com.codecool.repvault.domain.entities.SessionTemplate;
-import com.codecool.repvault.domain.entities.SetTemplate;
-import com.codecool.repvault.domain.entities.User;
+import com.codecool.repvault.application.DTOs.incoming.*;
+import com.codecool.repvault.domain.entities.*;
 import com.codecool.repvault.domain.exceptions.SessionException;
 import com.codecool.repvault.infrastructure.repositories.SessionTemplateRepository;
 import org.springframework.http.HttpStatus;
@@ -30,25 +25,26 @@ public class SessionTemplateUtil {
                 authenticatedUser,
                 sessionTemplateRequestDTO.getName()
         );
-        for (ExerciseRequestDTO exerciseRequestDTO : sessionTemplateRequestDTO.getExercises()) {
+        for (ExerciseTemplateRequestDTO exerciseTemplateRequestDTO : sessionTemplateRequestDTO.getExercises()) {
             ExerciseTemplate exerciseTemplate = createExerciseTemplate(
                     sessionTemplate,
-                    exerciseRequestDTO
+                    exerciseTemplateRequestDTO
             );
             sessionTemplate.addExercise(exerciseTemplate);
         }
         return sessionTemplate;
     }
 
-    private ExerciseTemplate createExerciseTemplate(SessionTemplate sessionTemplate, ExerciseRequestDTO exerciseRequestDTO) {
+    private ExerciseTemplate createExerciseTemplate(SessionTemplate sessionTemplate, ExerciseTemplateRequestDTO exerciseTemplateRequestDTO) {
         ExerciseTemplate exerciseTemplate = new ExerciseTemplate(
                 sessionTemplate,
-                exerciseRequestDTO.getDescription(),
-                exerciseRequestDTO.getType()
+                exerciseTemplateRequestDTO.getId(),
+                exerciseTemplateRequestDTO.getType()
         );
-        for (SetRequestDTO setRequestDTO : exerciseRequestDTO.getSets()) {
+        for (SetTemplateRequestDTO setRequestDTO : exerciseTemplateRequestDTO.getSets()) {
             SetTemplate setTemplate = new SetTemplate(
                     exerciseTemplate,
+                    setRequestDTO.getId(),
                     setRequestDTO.getType(),
                     setRequestDTO.getReps(),
                     setRequestDTO.getWeight()
@@ -83,6 +79,10 @@ public class SessionTemplateUtil {
 
     public void updateSessionTemplate(SessionTemplate sessionTemplate, SessionTemplateRequestDTO sessionTemplateRequestDTO) {
         SessionTemplate newSessionTemplate = convertToEntity(sessionTemplateRequestDTO);
-        sessionTemplate.setExercises(newSessionTemplate.getExercises());
+        sessionTemplate.getExercises().clear();
+        sessionTemplate.getExercises().addAll(newSessionTemplate.getExercises());
+        for (ExerciseTemplate exerciseTemplate : sessionTemplate.getExercises()) {
+            exerciseTemplate.setSession(sessionTemplate);
+        }
     }
 }

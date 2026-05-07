@@ -21,9 +21,6 @@ public class ExerciseTemplate {
     @JoinColumn(name = "session_id", nullable = false)
     private SessionTemplate session;
 
-    @Column(name = "description", nullable = true)
-    private String description;
-
     @Enumerated(EnumType.STRING)
     private ExerciseEnum type;
 
@@ -34,9 +31,9 @@ public class ExerciseTemplate {
     )
     private List<SetTemplate> sets = new ArrayList<>();
 
-    public ExerciseTemplate(SessionTemplate session, String description, ExerciseEnum type) {
+    public ExerciseTemplate(SessionTemplate session, Long id, ExerciseEnum type) {
         this.session = session;
-        this.description = description;
+        this.id = id;
         this.type = type;
     }
 

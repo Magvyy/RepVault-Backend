@@ -30,8 +30,9 @@ public class SetTemplate {
     @Column(name = "weight", nullable = false)
     private BigDecimal weight;
 
-    public SetTemplate(ExerciseTemplate exercise, SetEnum type, int reps, BigDecimal weight) {
+    public SetTemplate(ExerciseTemplate exercise, Long id, SetEnum type, int reps, BigDecimal weight) {
         this.exercise = exercise;
+        this.id = id;
         this.type = type;
         this.reps = reps;
         this.weight = weight;

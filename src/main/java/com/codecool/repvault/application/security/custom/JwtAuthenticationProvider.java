@@ -10,11 +10,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 @Component
-public class JwtAuthenticationManager implements AuthenticationProvider {
+public class JwtAuthenticationProvider implements AuthenticationProvider {
     private final PasswordEncoder passwordEncoder;
     private final CustomUserDetailsService customUserDetailsService;
 
-    public JwtAuthenticationManager(PasswordEncoder passwordEncoder, CustomUserDetailsService customUserDetailsService) {
+    public JwtAuthenticationProvider(PasswordEncoder passwordEncoder, CustomUserDetailsService customUserDetailsService) {
         this.passwordEncoder = passwordEncoder;
         this.customUserDetailsService = customUserDetailsService;
     }

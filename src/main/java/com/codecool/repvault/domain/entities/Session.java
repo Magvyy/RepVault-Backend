@@ -28,10 +28,10 @@ public class Session {
     @Column(name = "description", nullable = true)
     private String description;
 
-    @Column(name = "start", nullable = false)
+    @Column(name = "start_time", nullable = false)
     private ZonedDateTime start;
 
-    @Column(name = "end", nullable = false)
+    @Column(name = "end_time", nullable = false)
     private ZonedDateTime end;
 
     @OneToMany(

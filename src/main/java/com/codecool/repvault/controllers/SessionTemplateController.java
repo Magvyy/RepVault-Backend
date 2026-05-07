@@ -1,6 +1,7 @@
 package com.codecool.repvault.controllers;
 
 import com.codecool.repvault.application.DTOs.incoming.SessionTemplateRequestDTO;
+import com.codecool.repvault.application.DTOs.outgoing.SessionTemplateOverviewResponseDTO;
 import com.codecool.repvault.application.DTOs.outgoing.SessionTemplateResponseDTO;
 import com.codecool.repvault.controllers.utils.ResponseUtil;
 import com.codecool.repvault.domain.entities.SessionTemplate;
@@ -8,6 +9,8 @@ import com.codecool.repvault.domain.services.SessionTemplateService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/sessions/templates")
@@ -23,6 +26,13 @@ public class SessionTemplateController {
         SessionTemplate sessionTemplate = sessionTemplateService.createSessionTemplate(sessionTemplateRequestDTO);
         SessionTemplateResponseDTO sessionTemplateResponseDTO = new SessionTemplateResponseDTO(sessionTemplate);
         return ResponseUtil.wrapEntity(sessionTemplateResponseDTO);
+    }
+
+    @GetMapping()
+    public ResponseEntity<List<SessionTemplateOverviewResponseDTO>> getSessionTemplates(@RequestParam("offset") int offset) {
+        List<SessionTemplate> sessionTemplates = sessionTemplateService.getSessionTemplates(offset);
+        List<SessionTemplateOverviewResponseDTO> sessionTemplateOverviewResponseDTOs = sessionTemplates.stream().map(SessionTemplateOverviewResponseDTO::new).toList();
+        return ResponseUtil.wrapEntity(sessionTemplateOverviewResponseDTOs);
     }
 
     @GetMapping("/{id}")
