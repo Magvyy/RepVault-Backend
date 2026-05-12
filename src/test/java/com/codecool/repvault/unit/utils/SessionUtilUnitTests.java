@@ -20,7 +20,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.math.BigDecimal;
+;
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -47,7 +47,7 @@ public class SessionUtilUnitTests {
     private String exerciseDescription;
     private SetEnum setType;
     private int setReps;
-    private BigDecimal setWeight;
+    private Double setWeight;
 
     private int setsPerExercise = 4;
     private int exercisesPerSession = 4;
@@ -65,7 +65,7 @@ public class SessionUtilUnitTests {
         exerciseDescription = "Testing exercise";
         setType = SetEnum.NORMAL;
         setReps = 8;
-        setWeight = BigDecimal.valueOf(50);
+        setWeight = Double.valueOf(50);
         setsPerExercise = 4;
         exercisesPerSession = 4;
 
@@ -109,7 +109,7 @@ public class SessionUtilUnitTests {
         assertEquals(session.getName(), sessionName);
         assertEquals(session.getDescription(), sessionDescription);
 
-        for (Exercise exercise : session.getExercises()) {
+        for (Exercise exercise : session.exercises) {
             assertEquals(exercise.getDescription(), exerciseDescription);
             assertEquals(exercise.getType(), exerciseType);
 
