@@ -13,7 +13,7 @@ class TemplateSessionUtil(
     private val templateSessionRepository: TemplateSessionRepository,
 ) {
     fun convertToEntity(id: Long?, templateSessionRequestDTO: TemplateSessionRequestDTO): TemplateSession {
-        val authenticatedUser = securityUtil.authenticatedUser
+        val authenticatedUser = securityUtil.authenticatedUser!!
         val templateSession = TemplateSession(
             authenticatedUser,
             id,
@@ -35,7 +35,7 @@ class TemplateSessionUtil(
     }
 
     fun ownsSessionTemplate(templateSession: TemplateSession): Boolean {
-        val authenticatedUser = securityUtil.authenticatedUser
+        val authenticatedUser = securityUtil.authenticatedUser!!
         return authenticatedUser.id == templateSession.user!!.id
     }
 

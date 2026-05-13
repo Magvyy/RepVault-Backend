@@ -1,5 +1,6 @@
 package com.codecool.repvault.domain.entities
 
+import com.codecool.repvault.application.DTOs.incoming.ActiveSetRequestDTO
 import com.codecool.repvault.application.DTOs.incoming.SetRequestDTO
 import com.codecool.repvault.domain.entities.enums.SetEnum
 import jakarta.persistence.*
@@ -25,7 +26,7 @@ class Set {
     @Column(name = "weight", nullable = false)
     var weight: Double? = null
 
-    constructor(exercise: Exercise, set: ActiveSet) {
+    constructor(exercise: Exercise, set: ActiveSetRequestDTO) {
         this.exercise = exercise
         this.type = set.type
         this.reps = set.reps

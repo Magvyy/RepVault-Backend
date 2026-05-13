@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component
 
 @Component
 class SecurityUtil(private val userRepository: UserRepository) {
-    val authenticatedUser: User
+    val authenticatedUser: User?
         get() {
             val authentication =
                 SecurityContextHolder.getContext().authentication
@@ -23,6 +23,6 @@ class SecurityUtil(private val userRepository: UserRepository) {
                 )
                 return oUser.get()
             }
-            throw UserException("User is unauthenticated", HttpStatus.FORBIDDEN)
+            return null
         }
 }

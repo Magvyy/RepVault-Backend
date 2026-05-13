@@ -13,11 +13,11 @@ import org.springframework.stereotype.Service
 class SessionService(private val sessionRepository: SessionRepository, private val sessionUtil: SessionUtil, private val securityUtil: SecurityUtil) {
     private val pageSize = 2
     fun getVisibleSessions(offset: Int): MutableList<Session> {
-        return sessionRepository.findVisible(securityUtil.authenticatedUser.id!!, offset, pageSize)
+        return sessionRepository.findVisible(securityUtil.authenticatedUser?.id, offset, pageSize)
     }
 
     fun getUserSessions(userId: Long, offset: Int): MutableList<Session> {
-        return sessionRepository.findByUserIdIfFriends(securityUtil.authenticatedUser.id!!, userId, offset, pageSize)
+        return sessionRepository.findByUserIdIfFriends(securityUtil.authenticatedUser?.id, userId, offset, pageSize)
     }
 
     fun readSession(sessionId: Long): Session {

@@ -36,13 +36,13 @@ class FriendService(
         if (friendUtil.isFriendsWith(user)) throw FriendException("Already friends", HttpStatus.BAD_REQUEST)
 
         val authenticatedUser = securityUtil.authenticatedUser
-        val friendRequest = FriendRequest(authenticatedUser, user)
+        val friendRequest = FriendRequest(authenticatedUser!!, user)
         friendRequestRepository.save<FriendRequest>(friendRequest)
     }
 
     fun acceptFriendRequest(userId: Long) {
         val user = userUtil.findByIdOrThrow(userId)
-        val authenticatedUser = securityUtil.authenticatedUser
+        val authenticatedUser = securityUtil.authenticatedUser!!
 
         val friendRequest = friendRequestRepository
             .findByToAndFrom(authenticatedUser, user)
@@ -60,7 +60,7 @@ class FriendService(
 
     fun rejectFriendRequest(userId: Long) {
         val user = userUtil.findByIdOrThrow(userId)
-        val authenticatedUser = securityUtil.authenticatedUser
+        val authenticatedUser = securityUtil.authenticatedUser!!
 
         val friendRequest = friendRequestRepository
             .findByToAndFrom(authenticatedUser, user)

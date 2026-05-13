@@ -51,7 +51,7 @@ class TemplateSessionService(
         val sort = Sort.by("id").descending()
         val pageable: Pageable = PageRequest.of(offset / pageSize, pageSize, sort)
         val user = securityUtil.authenticatedUser
-        return templateSessionRepository.findByUserId(user.id!!, pageable)
+        return templateSessionRepository.findByUserId(user!!.id!!, pageable)
     }
 
     fun readSessionTemplate(templateSessionId: Long): TemplateSession {

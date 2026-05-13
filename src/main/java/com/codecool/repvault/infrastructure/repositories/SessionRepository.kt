@@ -27,20 +27,24 @@ interface SessionRepository : JpaRepository<Session, Long> {
             )
             SELECT s.*
             FROM sessions s
-            JOIN visible_authors v
-            ON s.user_id = v.user_id
+            WHERE s.public
+            OR EXISTS (
+                SELECT 1
+                FROM visible_authors v
+                WHERE s.user_id = v.user_id
+            )
             ORDER BY s.id DESC
             OFFSET :offset LIMIT :pageSize
     """, nativeQuery = true
     )
-    fun findVisible(userId: Long, offset: Int, pageSize: Int): MutableList<Session>
+    fun findVisible(userId: Long?, offset: Int, pageSize: Int): MutableList<Session>
 
     @Query(
         value = """
-            SELECT *
-            FROM sessions
+            SELECT s.*
+            FROM sessions s
             WHERE user_id = :friendId
-            AND (
+            AND ((
                 :userId = :friendId OR
                 EXISTS (
                     SELECT 1
@@ -48,10 +52,10 @@ interface SessionRepository : JpaRepository<Session, Long> {
                     WHERE (user_id_1 = :userId AND user_id_2 = :friendId)
                     OR (user_id_2 = :userId AND user_id_1 = :friendId)
                 )
-            )
-            ORDER BY id DESC
+            ) OR s.public)
+            ORDER BY s.id DESC
             OFFSET :offset LIMIT :pageSize
     """, nativeQuery = true
     )
-    fun findByUserIdIfFriends(userId: Long, friendId: Long, offset: Int, pageSize: Int): MutableList<Session>
+    fun findByUserIdIfFriends(userId: Long?, friendId: Long, offset: Int, pageSize: Int): MutableList<Session>
 }

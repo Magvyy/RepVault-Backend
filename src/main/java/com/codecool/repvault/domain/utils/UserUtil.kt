@@ -33,7 +33,7 @@ class UserUtil(
     }
 
     fun authenticatedUserHasId(id: Long): Boolean {
-        val authenticatedUser = securityUtil.authenticatedUser
+        val authenticatedUser = securityUtil.authenticatedUser!!
         return authenticatedUser.id == id
     }
 

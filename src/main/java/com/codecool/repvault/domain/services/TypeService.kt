@@ -2,6 +2,7 @@ package com.codecool.repvault.domain.services
 
 import com.codecool.repvault.domain.entities.enums.ExerciseEnum
 import com.codecool.repvault.domain.entities.enums.SetEnum
+import com.codecool.repvault.domain.entities.enums.UserEnum
 import org.springframework.stereotype.Service
 
 @Service
@@ -11,4 +12,7 @@ class TypeService {
 
     val exerciseTypes: MutableList<ExerciseEnum>
         get() = ExerciseEnum.entries.toTypedArray().toList() as MutableList<ExerciseEnum>
+
+    val userTypes: MutableList<UserEnum>
+        get() = UserEnum.entries.toTypedArray().toList() as MutableList<UserEnum>
 }

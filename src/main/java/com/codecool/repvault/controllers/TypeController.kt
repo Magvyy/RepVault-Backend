@@ -2,9 +2,11 @@ package com.codecool.repvault.controllers
 
 import com.codecool.repvault.application.DTOs.outgoing.ExerciseTypeDTO
 import com.codecool.repvault.application.DTOs.outgoing.SetTypeDTO
+import com.codecool.repvault.application.DTOs.outgoing.UserTypeDTO
 import com.codecool.repvault.controllers.utils.ResponseUtil
 import com.codecool.repvault.domain.entities.enums.ExerciseEnum
 import com.codecool.repvault.domain.entities.enums.SetEnum
+import com.codecool.repvault.domain.entities.enums.UserEnum
 import com.codecool.repvault.domain.services.TypeService
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
@@ -32,5 +34,15 @@ class TypeController(private val typeService: TypeService) {
                 .map<ExerciseTypeDTO> { type: ExerciseEnum -> ExerciseTypeDTO(type.ordinal.toLong(), type) }
                 .toList()
             return ResponseUtil.wrapEntity<MutableList<ExerciseTypeDTO>>(setTypeResponseDTOS)
+        }
+
+    @get:GetMapping("/users")
+    val userTypes: ResponseEntity<MutableList<UserTypeDTO>>
+        get() {
+            val userTypeDTOs = typeService.userTypes
+                .stream()
+                .map<UserTypeDTO> { type: UserEnum -> UserTypeDTO(type.ordinal.toLong(), type) }
+                .toList()
+            return ResponseUtil.wrapEntity<MutableList<UserTypeDTO>>(userTypeDTOs)
         }
 }

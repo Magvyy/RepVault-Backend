@@ -20,8 +20,8 @@ interface FriendRequestRepository : JpaRepository<FriendRequest, FriendRequestId
         SELECT EXISTS (
             SELECT 1
             FROM friend_requests
-            WHERE (from_id = :userId1 AND to_id = :userId2)
-            OR (from_id = :userId2 AND to_id = :userId1)
+            WHERE (from_user_id = :userId1 AND to_user_id = :userId2)
+            OR (from_user_id = :userId2 AND to_user_id = :userId1)
         )
     
     """, nativeQuery = true

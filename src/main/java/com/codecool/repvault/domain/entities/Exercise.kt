@@ -1,5 +1,6 @@
 package com.codecool.repvault.domain.entities
 
+import com.codecool.repvault.application.DTOs.incoming.ActiveExerciseRequestDTO
 import com.codecool.repvault.application.DTOs.incoming.ExerciseRequestDTO
 import com.codecool.repvault.domain.entities.enums.ExerciseEnum
 import jakarta.persistence.*
@@ -24,7 +25,7 @@ class Exercise {
     @OneToMany(mappedBy = "exercise", cascade = [CascadeType.ALL], orphanRemoval = true)
     val sets: MutableList<Set> = ArrayList<Set>()
 
-    constructor(session: Session, exercise: ActiveExercise) {
+    constructor(session: Session, exercise: ActiveExerciseRequestDTO) {
         this.session = session
         this.description = exercise.description
         this.type = exercise.type

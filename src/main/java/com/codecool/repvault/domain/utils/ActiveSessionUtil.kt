@@ -2,6 +2,7 @@ package com.codecool.repvault.domain.utils
 
 import com.codecool.repvault.application.DTOs.incoming.ActiveSessionRequestDTO
 import com.codecool.repvault.domain.entities.ActiveSession
+import com.codecool.repvault.domain.entities.Session
 import com.codecool.repvault.domain.exceptions.SessionException
 import com.codecool.repvault.infrastructure.repositories.ActiveSessionRepository
 import org.springframework.http.HttpStatus
@@ -13,7 +14,7 @@ class ActiveSessionUtil(
     private val activeSessionRepository: ActiveSessionRepository
 ) {
     fun convertToEntity(id: Long?, activeSessionRequestDTO: ActiveSessionRequestDTO): ActiveSession {
-        val authenticatedUser = securityUtil.authenticatedUser
+        val authenticatedUser = securityUtil.authenticatedUser!!
         val activeSession = ActiveSession(
             authenticatedUser,
             id,
@@ -23,7 +24,7 @@ class ActiveSessionUtil(
     }
 
     fun isOwner(session: ActiveSession): Boolean {
-        val authenticatedUser = securityUtil.authenticatedUser
+        val authenticatedUser = securityUtil.authenticatedUser!!
         return authenticatedUser.id == session.user!!.id
     }
 
@@ -34,14 +35,19 @@ class ActiveSessionUtil(
     }
 
     fun getCurrentActiveSession(): ActiveSession {
-        return activeSessionRepository.findByUserId(securityUtil.authenticatedUser.id!!)
+        return activeSessionRepository.findByUserId(securityUtil.authenticatedUser!!.id!!)
     }
 
     fun hasActiveSession(): Boolean {
-        return activeSessionRepository.existsByUserId(securityUtil.authenticatedUser.id!!)
+        return activeSessionRepository.existsByUserId(securityUtil.authenticatedUser!!.id!!)
     }
 
     fun updateActiveSession(id: Long?, activeSessionRequestDTO: ActiveSessionRequestDTO): ActiveSession {
         return convertToEntity(id, activeSessionRequestDTO)
+    }
+
+    fun endActiveSession(activeSessionRequestDTO: ActiveSessionRequestDTO): Session {
+        val user = securityUtil.authenticatedUser!!
+        return Session(user, activeSessionRequestDTO)
     }
 }

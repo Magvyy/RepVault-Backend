@@ -8,9 +8,9 @@ import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Component
 
 @Component
-class SessionUtil(private val securityUtil: SecurityUtil, private val sessionRepository: SessionRepository) {
+class SessionUtil(private val securityUtil: SecurityUtil, private val sessionRepository: SessionRepository, private val friendUtil: FriendUtil) {
     fun convertToEntity(id: Long?, sessionRequestDTO: SessionRequestDTO): Session {
-        val authenticatedUser = securityUtil.authenticatedUser
+        val authenticatedUser = securityUtil.authenticatedUser!!
         val session = Session(
             authenticatedUser,
             id,
@@ -20,7 +20,7 @@ class SessionUtil(private val securityUtil: SecurityUtil, private val sessionRep
     }
 
     fun canViewSession(session: Session): Boolean {
-        return ownsSession(session)
+        return if (session.public!!) true else (friendUtil.isFriendsWith(session.user!!))
     }
 
     fun canUpdateSession(session: Session): Boolean {
@@ -32,7 +32,7 @@ class SessionUtil(private val securityUtil: SecurityUtil, private val sessionRep
     }
 
     private fun ownsSession(session: Session): Boolean {
-        val authenticatedUser = securityUtil.authenticatedUser
+        val authenticatedUser = securityUtil.authenticatedUser!!
         return authenticatedUser.id == session.user!!.id
     }
 

@@ -11,18 +11,18 @@ class FriendRequestUtil(
     private val friendRequestRepository: FriendRequestRepository
 ) {
     fun hasRequestWith(user: User): Boolean {
-        val authenticatedUser = securityUtil.authenticatedUser
+        val authenticatedUser = securityUtil.authenticatedUser!!
         return friendRequestRepository.existsBetween(user.id!!, authenticatedUser.id!!)
     }
 
     fun hasRequestFrom(user: User): Boolean {
-        val authenticatedUser = securityUtil.authenticatedUser
+        val authenticatedUser = securityUtil.authenticatedUser!!
         val id = FriendRequestId(user.id!!, authenticatedUser.id!!)
         return friendRequestRepository.existsById(id)
     }
 
     fun hasRequestTo(user: User): Boolean {
-        val authenticatedUser = securityUtil.authenticatedUser
+        val authenticatedUser = securityUtil.authenticatedUser!!
         val id = FriendRequestId(authenticatedUser.id!!, user.id!!)
         return friendRequestRepository.existsById(id)
     }

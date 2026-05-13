@@ -1,5 +1,6 @@
 package com.codecool.repvault.domain.entities
 
+import com.codecool.repvault.application.DTOs.incoming.ActiveSessionRequestDTO
 import com.codecool.repvault.application.DTOs.incoming.SessionRequestDTO
 import jakarta.persistence.*
 import java.time.ZoneId
@@ -28,6 +29,9 @@ class Session {
     @Column(name = "end_time", nullable = false)
     var end: ZonedDateTime? = null
 
+    @Column(name = "public", nullable = false)
+    var public: Boolean? = null
+
     @Transient
     var volume: Double? = null
 
@@ -40,12 +44,13 @@ class Session {
     @OneToMany(mappedBy = "session", cascade = [CascadeType.ALL], orphanRemoval = true)
     val exercises: MutableList<Exercise> = ArrayList<Exercise>()
 
-    constructor(session: ActiveSession) {
-        this.user = session.user
+    constructor(user: User, session: ActiveSessionRequestDTO) {
+        this.user = user
         this.name = session.name
         this.description = session.description
         this.exercises.addAll(session.exercises.map { Exercise(this, it) })
         this.start = session.start
+        this.public = session.public
         endSession()
     }
 

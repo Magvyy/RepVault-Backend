@@ -25,16 +25,15 @@ class ActiveSessionService(
     }
 
     fun endActiveSession(activeSessionId: Long, activeSessionRequestDTO: ActiveSessionRequestDTO): Session {
-        var activeSession = activeSessionUtil.findByIdOrThrow(activeSessionId)
+        val activeSession = activeSessionUtil.findByIdOrThrow(activeSessionId)
 
         if (!activeSessionUtil.isOwner(activeSession)) throw SessionException(
             "Can't access this active session",
             HttpStatus.FORBIDDEN
         )
 
-        activeSession = activeSessionUtil.updateActiveSession(activeSessionId, activeSessionRequestDTO)
-        var session = Session(activeSession)
-        session = sessionRepository.save(session)
+        val session = activeSessionUtil.endActiveSession(activeSessionRequestDTO)
+        sessionRepository.save(session)
         activeSessionRepository.delete(activeSession)
         return session
     }
